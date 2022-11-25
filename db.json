@@ -1,0 +1,29 @@
+{
+  "Categories": [
+    {
+      "id": 1,
+      "name": "Пряники"      
+    },
+    {
+      "id": 2,
+      "name": "Наборы пряников"      
+    }
+  ],
+  "Products":[
+    {
+      "id": 1,
+      "categoriesId": 1,
+      "name": "Мишка"      
+    },
+    {
+      "id": 2,
+      "categoriesId": 1,
+      "name": "Сердце"      
+    },
+    {
+      "id": 3,
+      "categoriesId": 2,
+      "name": "Набор Love is..."      
+    }
+  ]
+}
