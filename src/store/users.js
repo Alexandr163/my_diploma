@@ -2,7 +2,6 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import userService from "../services/user.service";
 import authService from "../services/auth.service";
 import localStorageService from "../services/localStorage.service";
-import getRandomInt from "../utils/getRandomInt";
 import history from "../utils/history";
 import { generateAuthError } from "../utils/generateAuthError";
 
@@ -121,8 +120,6 @@ export const signUp =
                 createUser({
                     _id: data.localId,
                     email,
-                    rate: getRandomInt(1, 5),
-                    completedMeetings: getRandomInt(0, 200),
                     image: `https://avatars.dicebear.com/api/avataaars/${(
                         Math.random() + 1
                     )
