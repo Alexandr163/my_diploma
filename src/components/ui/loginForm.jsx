@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getIsAuth, signIn } from "../../store/authSlice";
 import { validator } from "../../utils/validator";
 import TextField from "../forms/textField";
-import { useNavigation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getAuthErrors, login } from "../../store/users";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
     const [data, setData] = useState({
         email: "",
-        password: "",
-        stayOn: false
+        password: ""
     });
-    const loginError = useSelector(getAuthErrors());
-    const history = useNavigation();
+    const navigate = useNavigate();
+    const isAuth = useSelector(getIsAuth());
     const dispatch = useDispatch();
     const [errors, setErrors] = useState({});
     const handleChange = (target) => {
@@ -21,6 +20,12 @@ const LoginForm = () => {
             [target.name]: target.value
         }));
     };
+
+    useEffect(() => {
+        if (isAuth) {
+            navigate("/");
+        }
+    }, [isAuth]);
 
     const validatorConfig = {
         email: {
@@ -48,11 +53,8 @@ const LoginForm = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        const redirect = history.location.state
-            ? history.location.state.from.pathname
-            : "/";
 
-        dispatch(login({ payload: data, redirect }));
+        dispatch(signIn(data.email, data.password));
     };
     return (
         <form onSubmit={handleSubmit}>
@@ -71,7 +73,6 @@ const LoginForm = () => {
                 onChange={handleChange}
                 error={errors.password}
             />
-            {loginError && <p className="text-danger">{loginError}</p>}
             <button
                 className="btn btn-primary w-100 mx-auto"
                 type="submit"
@@ -79,6 +80,10 @@ const LoginForm = () => {
             >
                 Submit
             </button>
+
+            <div>
+            <Link to="/register">Зарегистрироваться</Link>
+            </div>
         </form>
     );
 };

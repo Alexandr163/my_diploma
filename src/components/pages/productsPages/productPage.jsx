@@ -6,11 +6,16 @@ const ProductPage = () => {
     const { state } = useLocation();
     const { product } = state;
 
+    console.log("---product.image---", product.image);
+
     return (
         <>
-            <h1>{product.name}</h1>
+            <div className="container">
+                <h1>{product.name}</h1>
 
-            <h4>{JSON.stringify(product)}</h4>
+                <h4>{JSON.stringify(product)}</h4>
+                <img src={product.image}></img>
+            </div>
         </>
     );
 };
