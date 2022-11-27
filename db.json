@@ -1,29 +1,49 @@
 {
   "Categories": [
     {
-      "id": 1,
+      "id": "85CA196CD0FD49E287AC5BB546AC680D",
       "name": "Пряники"      
     },
     {
-      "id": 2,
+      "id": "F47202B5142B4D99B831B65A92E695F6",
       "name": "Наборы пряников"      
     }
   ],
   "Products":[
     {
-      "id": 1,
-      "categoriesId": 1,
+      "id": "B54B9A07B3ED43039EDCA9104EC49751",
+      "categoriesId": "85CA196CD0FD49E287AC5BB546AC680D",
       "name": "Мишка"      
     },
     {
-      "id": 2,
-      "categoriesId": 1,
+      "id": "8DE7FC3369B846ED9738285E04C94F1C",
+      "categoriesId": "85CA196CD0FD49E287AC5BB546AC680D",
       "name": "Сердце"      
     },
     {
-      "id": 3,
-      "categoriesId": 2,
+      "id": "90750E600A0D48988992F32EA0C91136",
+      "categoriesId": "F47202B5142B4D99B831B65A92E695F6",
       "name": "Набор Love is..."      
+    }
+  ],
+  "users": [
+    {
+      "id": "6E1F70621A0B4A7FB1BE8AFA86B59A39",
+      "name": "Ольга",
+      "email": "olga@mail.ru",
+      "password": "Test1234",
+      "phoneNumber": "89277771122",
+      "avatar": "https://drive.google.com/file/d/1d0Jd5oQ0NTsYnaGi_bV29i1BT0nZooMo/view?usp=share_link"
+    }
+  ],
+  "admin": [
+    {
+      "id": "A1C53263D5DE415F98C73DA3D4C7D191",
+      "name": "Александр",
+      "email": "shadow091@mail.ru",
+      "password": "Test12345",
+      "avatar": "https://drive.google.com/file/d/1LzfXVYQGoIBcftTWnyvxyf75ojkwN9pM/view?usp=share_link"
+
     }
   ]
 }

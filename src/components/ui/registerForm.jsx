@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { validator } from "../../utils/validator";
-import TextField from "../common/form/textField";
-import RadioField from "../common/form/radioField";
+import TextField from "../forms/textField";
+import RadioField from "../forms/radioField";
 import { useDispatch } from "react-redux";
 import { signUp } from "../../store/users";
 
@@ -13,7 +13,6 @@ const RegisterForm = () => {
         phoneNumber: "",
         sex: "male",
         name: ""
-
     });
     const [errors, setErrors] = useState({});
 
@@ -110,9 +109,9 @@ const RegisterForm = () => {
                 label="Номер телефона"
                 type="number"
                 name="phoneNumber"
-                value={data.password}
+                value={data.phoneNumber}
                 onChange={handleChange}
-                error={errors.password}
+                error={errors.phoneNumber}
             />
 
             <RadioField
@@ -126,7 +125,6 @@ const RegisterForm = () => {
                 onChange={handleChange}
                 label="Выберите ваш пол"
             />
-
         </form>
     );
 };
