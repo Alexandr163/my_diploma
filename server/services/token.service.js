@@ -4,7 +4,7 @@ const Token = require("../models/Token");
 
 class TokenService {
   generate(payload) {
-    const accessToken = jwt.sign(payload, config.get("accesSecret"), {
+    const accessToken = jwt.sign(payload, config.get("accessSecret"), {
       expiresIn: "1h",
     });
     const refreshToken = jwt.sign(payload, config.get("refreshSecret"));
@@ -28,6 +28,14 @@ class TokenService {
   validateRefresh(refreshToken) {
     try {
       return jwt.verify(refreshToken, config.get("refreshSecret"));
+    } catch (error) {
+      return null;
+    }
+  }
+
+  validateAccess(accessToken) {
+    try {
+      return jwt.verify(accessToken, config.get("accessSecret"));
     } catch (error) {
       return null;
     }

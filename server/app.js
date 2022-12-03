@@ -4,7 +4,6 @@ const config = require("config");
 const chalk = require("chalk");
 const initDatabase = require("./startUp/initDatabase");
 const routes = require("./routes");
-
 const app = express();
 
 app.use(express.json());
