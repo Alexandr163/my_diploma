@@ -7,7 +7,7 @@ const NavBar = () => {
     const isAuth = useSelector(getIsAuth());
 
     return (
-        <nav className="navbar bg-light mb-3">
+        <nav className="navbar bg-light">
             <div className="container-fluid">
                 <ul className="nav">
                     <li className="nav-item">
@@ -27,17 +27,17 @@ const NavBar = () => {
                 </ul>
 
                 <div className="d-flex">
-                    <Link className="nav-link " aria-current="page" to="/cart">
-                        Корзина
+                    <Link className="nav-link" aria-current="page" to="/cart">
+                        <i className="bi bi-cart4 fs-4"/>
                     </Link>
 
                     {!isAuth ? (
                         <Link
-                            className="nav-link "
+                            className="nav-link"
                             aria-current="page"
                             to="/login"
                         >
-                            Вход/Регистрация
+                            <i className="bi bi-box-arrow-in-right fs-4" />
                         </Link>
                     ) : (
                         <Link
@@ -45,7 +45,7 @@ const NavBar = () => {
                             aria-current="page"
                             to="/logout"
                         >
-                            Выход
+                            <i className="bi bi-box-arrow-left fs-4" />
                         </Link>
                     )}
                 </div>
