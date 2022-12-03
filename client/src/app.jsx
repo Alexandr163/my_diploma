@@ -9,7 +9,7 @@ import CartPage from "./components/pages/cartPage/cartPage";
 import ProductPage from "./components/pages/productsPages/productPage";
 import LogOut from "./components/logOut";
 import RegisterForm from "./components/ui/registerForm";
-// import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.css";
 
 function App() {
     return (

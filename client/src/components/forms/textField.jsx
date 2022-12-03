@@ -14,7 +14,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
         setShowPassword((prevState) => !prevState);
     };
     return (
-        <div className="mb-4">
+        <div className="mb-4 rounded-2xl">
             <label htmlFor={name}>{label}</label>
             <div className="input-group has-validation">
                 <input

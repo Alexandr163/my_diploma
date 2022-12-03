@@ -71,64 +71,70 @@ const RegisterForm = () => {
     };
 
     const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     const isValid = validate();
-    //     if (!isValid) return;
-    //     const newData = {
-    //         ...data
-    //     };
-    //     dispatch(signUp(newData));
+        //     e.preventDefault();
+        //     const isValid = validate();
+        //     if (!isValid) return;
+        //     const newData = {
+        //         ...data
+        //     };
+        //     dispatch(signUp(newData));
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <TextField
-                label="Электронная почта"
-                name="email"
-                value={data.email}
-                onChange={handleChange}
-                error={errors.email}
-            />
-            <TextField
-                label="Имя"
-                name="name"
-                value={data.name}
-                onChange={handleChange}
-                error={errors.name}
-            />
-            <TextField
-                label="Пароль"
-                type="password"
-                name="password"
-                value={data.password}
-                onChange={handleChange}
-                error={errors.password}
-            />
+        <div className="container mt-5">
+            <div className="row">
+                <div className="col-md-6 offset-md-3 shadow p-4">
+                    <form onSubmit={handleSubmit}>
+                        <TextField
+                            label="Электронная почта"
+                            name="email"
+                            value={data.email}
+                            onChange={handleChange}
+                            error={errors.email}
+                        />
+                        <TextField
+                            label="Имя"
+                            name="name"
+                            value={data.name}
+                            onChange={handleChange}
+                            error={errors.name}
+                        />
+                        <TextField
+                            label="Пароль"
+                            type="password"
+                            name="password"
+                            value={data.password}
+                            onChange={handleChange}
+                            error={errors.password}
+                        />
 
-            <TextField
-                label="Номер телефона"
-                type="number"
-                name="phoneNumber"
-                value={data.phoneNumber}
-                onChange={handleChange}
-                error={errors.phoneNumber}
-            />
+                        <TextField
+                            label="Номер телефона"
+                            type="number"
+                            name="phoneNumber"
+                            value={data.phoneNumber}
+                            onChange={handleChange}
+                            error={errors.phoneNumber}
+                        />
 
-            <RadioField
-                options={[
-                    { name: "Male", value: "male" },
-                    { name: "Female", value: "female" },
-                    { name: "Other", value: "other" }
-                ]}
-                value={data.sex}
-                name="sex"
-                onChange={handleChange}
-                label="Выберите ваш пол"
-            />
-            <div>
-            <Link to="/login">Войти</Link>
+                        <RadioField
+                            options={[
+                                { name: "Male", value: "male" },
+                                { name: "Female", value: "female" },
+                                { name: "Other", value: "other" }
+                            ]}
+                            value={data.sex}
+                            name="sex"
+                            onChange={handleChange}
+                            label="Выберите ваш пол"
+                        />
+                        <div>
+                            <Link className="nav-link " aria-current="page" to="/login">Войти</Link>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
+        </div>
     );
 };
 
