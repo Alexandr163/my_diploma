@@ -14,6 +14,7 @@ const schema = new Schema(
       type: String,
       requied: true,
     },
+    data:Buffer
     // phoneNumber: {
     //   type: Number,
     //   requied: true,

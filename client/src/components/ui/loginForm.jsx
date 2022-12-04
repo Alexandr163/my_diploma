@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIsAuth, signIn } from "../../store/authSlice";
 import { validator } from "../../utils/validator";
 import TextField from "../forms/textField";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const LoginForm = () => {
     const [data, setData] = useState({
         email: "",
         password: ""
     });
+    const location = useLocation();
+    console.log(location);
     const navigate = useNavigate();
     const isAuth = useSelector(getIsAuth());
     const dispatch = useDispatch();
@@ -85,7 +87,13 @@ const LoginForm = () => {
                         </button>
 
                         <div>
-                            <Link className="nav-link " aria-current="page" to="/register">Зарегистрироваться</Link>
+                            <Link
+                                className="nav-link "
+                                aria-current="page"
+                                to="/register"
+                            >
+                                Зарегистрироваться
+                            </Link>
                         </div>
                     </form>
                 </div>

@@ -1,5 +1,6 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import authService from "../services/auth.service";
+import localStorageService from "../services/localStorage.service";
 
 const authSlice = createSlice({
     name: "auth",
@@ -28,6 +29,12 @@ const authSlice = createSlice({
             state.isAuth = false;
             state.error = null;
             state.isLoading = false;
+        },
+        userCreated: (state, action) => {
+            if (!Array.isArray(state.entities)) {
+                state.entities = [];
+            }
+            state.entities.push(action.payload);
         }
     }
 });
@@ -37,9 +44,14 @@ const { authRequest, authRequestFailed, authReceived, logOutRequest } = actions;
 
 const logOutRequestFailed = createAction("auth/logOutRequestFailed");
 
+export function authReceivedAction() {
+    return authReceived;
+}
+
 export const signOut = () => (dispatch) => {
     try {
         dispatch(logOutRequest());
+        localStorageService.removeAuthUser();
     } catch (error) {
         dispatch(logOutRequestFailed("Error with logOut"));
     }
@@ -54,10 +66,39 @@ export const signIn = (email, pass) => async (dispatch) => {
         } else {
             dispatch(authRequestFailed("User not found"));
         }
+
+        localStorageService.setAuthUser(authUser);
     } catch (error) {
         dispatch(authRequestFailed(error.message));
     }
 };
+
+// export const signUp =
+//     ({ email, password, ...rest }) =>
+//     async (dispatch) => {
+//         dispatch(authRequest());
+//         try {
+//             const data = await authService.register({ email, password });
+//             localStorageService.setTokens(data);
+//             dispatch(authRequestSuccess({ userId: data.localId }));
+//             dispatch(
+//                 createUser({
+//                     _id: data.localId,
+//                     email,
+//                     rate: getRandomInt(1, 5),
+//                     completedMeetings: getRandomInt(0, 200),
+//                     image: `https://avatars.dicebear.com/api/avataaars/${(
+//                         Math.random() + 1
+//                     )
+//                         .toString(36)
+//                         .substring(7)}.svg`,
+//                     ...rest
+//                 })
+//             );
+//         } catch (error) {
+//             dispatch(authRequestFailed(error.message));
+//         }
+//     };
 
 export const getIsAuth = () => (state) => state.auth.isAuth;
 

@@ -27,9 +27,23 @@ const NavBar = () => {
                 </ul>
 
                 <div className="d-flex">
-                    <Link className="nav-link" aria-current="page" to="/cart">
-                        <i className="bi bi-cart4 fs-4"/>
-                    </Link>
+                    {!isAuth ? (
+                        <Link
+                            className="nav-link disabled"
+                            aria-current="page"
+                            to="/cart"
+                        >
+                            <i className="bi bi-cart4 fs-4" />
+                        </Link>
+                    ) : (
+                        <Link
+                            className="nav-link"
+                            aria-current="page"
+                            to="/cart"
+                        >
+                            <i className="bi bi-cart4 fs-4" />
+                        </Link>
+                    )}
 
                     {!isAuth ? (
                         <Link

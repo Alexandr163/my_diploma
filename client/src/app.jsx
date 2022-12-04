@@ -10,13 +10,30 @@ import ProductPage from "./components/pages/productsPages/productPage";
 import LogOut from "./components/logOut";
 import RegisterForm from "./components/ui/registerForm";
 import "bootstrap/dist/css/bootstrap.css";
+import ProtectedRoute from "./components/hoc/protectedRoute";
+import { useDispatch } from "react-redux";
+import localStorageService from "./services/localStorage.service";
+import { authReceivedAction } from "./store/authSlice";
 
 function App() {
+    const dispatch = useDispatch();
+    const authUser = localStorageService.getAuthUser();
+    const authAction = authReceivedAction();
+    if (authUser) {
+        dispatch(authAction(authUser));
+    }
     return (
         <div>
             <NavBar />
             <Routes>
-                <Route path="/cart" element={<CartPage />} />
+                <Route
+                    path="/cart"
+                    element={
+                        <ProtectedRoute>
+                            <CartPage />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route path="/product/:productId" element={<ProductPage />} />
                 <Route
                     path="/categories/:categoriesId"
