@@ -1,7 +1,7 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import authService from "../services/auth.service";
 
-const authSclice = createSlice({
+const authSlice = createSlice({
     name: "auth",
     initialState: {
         entities: null,
@@ -23,7 +23,7 @@ const authSclice = createSlice({
             state.isLoading = false;
             state.error = null;
         },
-        logoutRequest: (state, action) => {
+        logOutRequest: (state, action) => {
             state.entities = null;
             state.isAuth = false;
             state.error = null;
@@ -32,16 +32,16 @@ const authSclice = createSlice({
     }
 });
 
-const { reducer: authReducer, actions } = authSclice;
-const { authRequest, authRequestFailed, authReceived, logoutRequest } = actions;
+const { reducer: authReducer, actions } = authSlice;
+const { authRequest, authRequestFailed, authReceived, logOutRequest } = actions;
 
-const logoutRequestFailed = createAction("auth/logoutRequestFailed");
+const logOutRequestFailed = createAction("auth/logOutRequestFailed");
 
-export const singOut = () => (dispatch) => {
+export const signOut = () => (dispatch) => {
     try {
-        dispatch(logoutRequest());
+        dispatch(logOutRequest());
     } catch (error) {
-        dispatch(logoutRequestFailed("Error with logOut"));
+        dispatch(logOutRequestFailed("Error with logOut"));
     }
 };
 

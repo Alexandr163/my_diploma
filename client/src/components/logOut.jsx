@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { singOut } from "../store/authSlice";
+import { signOut } from "../store/authSlice";
 
 const LogOut = () => {
     const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const LogOut = () => {
 
     useEffect(() => {
         console.log("---LogOut - useEffect---");
-        dispatch(singOut());
+        dispatch(signOut());
         navigate("/");
     }, []);
 
