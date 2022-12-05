@@ -10,11 +10,13 @@ const ProductPage = () => {
 
     return (
         <>
-            <div className="container">
-                <h1>{product.name}</h1>
-
-                <h4>{JSON.stringify(product)}</h4>
-                <img src={product.image}></img>
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-md-6 offset-md-3 shadow p-4">
+                        <h3>{product.name}</h3>
+                        <img src={product.image}></img>
+                    </div>
+                </div>
             </div>
         </>
     );
