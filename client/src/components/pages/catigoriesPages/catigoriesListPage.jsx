@@ -23,10 +23,10 @@ const CategoriesListPage = () => {
             renderData = (
                 <>
                     {categories.map((item) => (
-                        <div key={item.id}>
+                        <div key={item._id}>
                             <Link
                                 className="nav-link mt-2 px-2"
-                                to={`/categories/${item.id}`}
+                                to={`/categories/${item._id}`}
                             >
                                 {item.name}
                             </Link>

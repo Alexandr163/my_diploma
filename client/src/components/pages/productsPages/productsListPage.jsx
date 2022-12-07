@@ -28,8 +28,12 @@ const ProductsListPage = ({ categoryId }) => {
     return (
         <>
             {productsList.map((item) => (
-                <div key={item.id}>
-                    <Link className="nav-link mt-2 px-2" to={`/product/${item.id}`} state={{ product: item }}>
+                <div key={item._id}>
+                    <Link
+                        className="nav-link mt-2 px-2"
+                        to={`/product/${item._id}`}
+                        state={{ product: item }}
+                    >
                         {item.name}
                     </Link>
                 </div>

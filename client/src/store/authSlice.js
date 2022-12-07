@@ -52,6 +52,7 @@ export const signOut = () => (dispatch) => {
     try {
         dispatch(logOutRequest());
         localStorageService.removeAuthUser();
+        localStorageService.removeCart();
     } catch (error) {
         dispatch(logOutRequestFailed("Error with logOut"));
     }

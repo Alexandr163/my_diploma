@@ -14,6 +14,7 @@ import ProtectedRoute from "./components/hoc/protectedRoute";
 import { useDispatch } from "react-redux";
 import localStorageService from "./services/localStorage.service";
 import { authReceivedAction } from "./store/authSlice";
+import { loadCart } from "./store/cart";
 
 function App() {
     const dispatch = useDispatch();
@@ -21,6 +22,7 @@ function App() {
     const authAction = authReceivedAction();
     if (authUser) {
         dispatch(authAction(authUser));
+        dispatch(loadCart());
     }
     return (
         <div>

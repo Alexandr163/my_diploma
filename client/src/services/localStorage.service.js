@@ -15,4 +15,25 @@ function removeAuthUser() {
     localStorage.removeItem("authUser");
 }
 
-export default { setAuthUser, getAuthUser, removeAuthUser };
+function getCart() {
+    const cart = localStorage.getItem("Cart");
+
+    return JSON.parse(cart);
+}
+
+function setCart(cart) {
+    localStorage.setItem("Cart", cart);
+}
+
+function removeCart() {
+    localStorage.removeItem("Cart");
+}
+
+export default {
+    setAuthUser,
+    getAuthUser,
+    removeAuthUser,
+    getCart,
+    setCart,
+    removeCart
+};

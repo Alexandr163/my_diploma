@@ -1,4 +1,4 @@
 {
-    "apiEndpoint": "https://my-first-app-3ddef-default-rtdb.europe-west1.firebasedatabase.app/",
+    "apiEndpoint": "https://localhost:8080",
     "isFireBase": true
   }
