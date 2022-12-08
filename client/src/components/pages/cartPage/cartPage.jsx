@@ -16,6 +16,7 @@ const CartPage = () => {
     const handleRemoveFromCart = (product) => {
         dispatch(removeProductFromCart(product));
     };
+    const count = 1;
 
     return (
         <div className="container mt-5">
@@ -41,7 +42,6 @@ const CartPage = () => {
                                         >
                                             -
                                         </button>
-                                        <button className="btn btn-outline-primary btn-sm">1</button>
                                         <button
                                             type="button"
                                             className="btn btn-outline-primary btn-sm"
@@ -50,6 +50,18 @@ const CartPage = () => {
                                             }
                                         >
                                             +
+                                            <span
+                                                className={
+                                                    count
+                                                        ? "position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                                        : null
+                                                }
+                                            >
+                                                {count}
+                                                <span className="visually-hidden">
+                                                    unread messages
+                                                </span>
+                                            </span>
                                         </button>
                                     </div>
                                 </div>
