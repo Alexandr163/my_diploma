@@ -9,7 +9,6 @@ const LogOut = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("---LogOut - useEffect---");
         dispatch(signOut());
         navigate("/");
     }, []);

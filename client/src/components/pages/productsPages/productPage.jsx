@@ -1,58 +1,48 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { addProductInCart, removeProductFromCart } from "../../../store/cart";
-// import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, Link } from "react-router-dom";
+import {
+    addProductInCart,
+    getCart
+} from "../../../store/cart";
 
 const ProductPage = () => {
     const { state } = useLocation();
     const { product } = state;
     const dispatch = useDispatch();
+    const cart = useSelector(getCart());
+    const isProductInCart = cart.some((p) => p._id === product._id);
 
-    console.log("---product.image---", product.image);
-
-    const handleAddToCart = () => {
+    const handleAddToCart = (e) => {
+        e.stopPropagation();
         dispatch(addProductInCart(product));
-    };
-    const handleRemoveFromCart = () => {
-        dispatch(removeProductFromCart(product));
     };
 
     return (
         <>
-            <div className="">
-                <div className="card col-4">
-                    <img src="..." className="card-img-top" alt="..." />
-                    <div className="card-body">
-                        {/* <div className="container mt-5">
-                        <div className="row">
-                            <div className="col-md-6 offset-md-3 shadow p-4"> */}
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-md-6 offset-md-3 shadow p-4">
                         <h3>{product.name}</h3>
-                        <button
-                            className="btn btn-primary me-1"
-                            onClick={handleAddToCart}
-                        >
-                            Add
-                        </button>
-                        <button
-                            className="btn btn-primary ms-1"
-                            onClick={handleRemoveFromCart}
-                        >
-                            Remove
-                        </button>
-                        {/* <img src={product.image}></img> */}
-                        {/* </div>
-                        </div>
-                    </div> */}
+                        {!isProductInCart ? (
+                            <button
+                                className="btn btn-outline-primary btn-sm"
+                                onClick={handleAddToCart}
+                            >
+                                Купить
+                            </button>
+                        ) : (
+                            <Link to="/cart">
+                                <button className="btn btn-outline-primary btn-sm">
+                                    В корзину
+                                </button>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>
         </>
     );
 };
-
-// ProductPage.propTypes = {
-//     product: PropTypes.object
-// };
 
 export default ProductPage;
