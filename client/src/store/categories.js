@@ -4,7 +4,7 @@ import categoriesService from "../services/categories.service";
 const catigoriesSlice = createSlice({
     name: "categories",
     initialState: {
-        entities: null,
+        entities: [],
         isLoading: true,
         error: null
     },
@@ -16,12 +16,10 @@ const catigoriesSlice = createSlice({
         },
 
         requestCatigories: (state, action) => {
-            state.entities = null;
-            state.error = null;
             state.isLoading = true;
         },
         requestCatigoriesFailed: (state, action) => {
-            state.entities = null;
+            state.entities = [];
             state.error = action.payload;
             state.isLoading = false;
         }

@@ -4,7 +4,7 @@ import productsService from "../services/products.service";
 const productsSlice = createSlice({
     name: "products",
     initialState: {
-        entities: null,
+        entities: [],
         isLoading: false,
         error: null
     },
@@ -16,12 +16,10 @@ const productsSlice = createSlice({
         },
 
         requestProducts: (state, action) => {
-            state.entities = null;
-            state.error = null;
             state.isLoading = true;
         },
         requestProductsFailed: (state, action) => {
-            state.entities = null;
+            state.entities = [];
             state.error = action.payload;
             state.isLoading = false;
         }

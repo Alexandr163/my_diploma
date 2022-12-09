@@ -1,18 +1,13 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { fetchCategories, getCategories } from "../../../store/categories";
+import { getCategories } from "../../../store/categories";
 import ProductsListPage from "../productsPages/productsListPage";
 
 const CategoriesListPage = () => {
     const { categoriesId } = useParams();
     const categories = useSelector(getCategories());
     console.log(categories);
-    const dispath = useDispatch();
-
-    useEffect(() => {
-        dispath(fetchCategories());
-    }, []);
 
     let renderData = null;
 

@@ -34,8 +34,19 @@
       "name": "Ольга",
       "email": "olga@mail.ru",
       "password": "Test1234",
+      "adminStatus": true,
       "phoneNumber": "89277771122",
       "avatar": "https://drive.google.com/file/d/1d0Jd5oQ0NTsYnaGi_bV29i1BT0nZooMo/view?usp=share_link"
+    },
+    {
+      "_id": "A1C53263D5DE415F98C73DA3D4C7D191",
+      "name": "Александр",
+      "email": "shadow091@mail.ru",
+      "password": "Test12345",
+      "adminStatus": false,
+      "phoneNumber": "11111111111",
+      "avatar": "https://drive.google.com/file/d/1LzfXVYQGoIBcftTWnyvxyf75ojkwN9pM/view?usp=share_link"
+
     }
   ],
   "admin": [
@@ -44,6 +55,7 @@
       "name": "Александр",
       "email": "shadow091@mail.ru",
       "password": "Test12345",
+      "adminStatus": true,
       "avatar": "https://drive.google.com/file/d/1LzfXVYQGoIBcftTWnyvxyf75ojkwN9pM/view?usp=share_link"
 
     }

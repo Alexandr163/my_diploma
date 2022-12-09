@@ -15,6 +15,10 @@ function removeAuthUser() {
     localStorage.removeItem("authUser");
 }
 
+function setAuthAdmin() {
+    localStorage.setItem("authAdmin");
+}
+
 function getCart() {
     const cart = localStorage.getItem("Cart");
 
@@ -33,6 +37,7 @@ export default {
     setAuthUser,
     getAuthUser,
     removeAuthUser,
+    setAuthAdmin,
     getCart,
     setCart,
     removeCart

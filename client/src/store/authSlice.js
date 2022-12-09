@@ -8,25 +8,42 @@ const authSlice = createSlice({
         entities: null,
         error: null,
         isAuth: false,
+        isAuthAdmin: false,
         isLoading: false
     },
     reducers: {
-        authRequest: (state, action) => {
+        authRequested: (state, action) => {
             state.isLoading = true;
-        },
-        authRequestFailed: (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
         },
         authReceived: (state, action) => {
             state.isAuth = true;
+            state.isAuthAdmin = action.payload.adminStatus;
             state.entities = action.payload;
             state.isLoading = false;
             state.error = null;
         },
-        logOutRequest: (state, action) => {
+        authRequestedFailed: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+        authAdminRequested: (state, action) => {
+            state.isLoading = true;
+        },
+        authAdminReceived: (state, action) => {
+            state.isAuth = true;
+            state.isAuthAdmin = true;
+            state.entities = action.payload;
+            state.isLoading = false;
+            state.error = null;
+        },
+        authAdminRequestedFailed: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+        logOutRequested: (state, action) => {
             state.entities = null;
             state.isAuth = false;
+            state.isAuthAdmin = false;
             state.error = null;
             state.isLoading = false;
         },
@@ -40,48 +57,50 @@ const authSlice = createSlice({
 });
 
 const { reducer: authReducer, actions } = authSlice;
-const { authRequest, authRequestFailed, authReceived, logOutRequest } = actions;
+const { authRequested, authRequestedFailed, authReceived, logOutRequested } =
+    actions;
 
-const logOutRequestFailed = createAction("auth/logOutRequestFailed");
+const logOutRequestedFailed = createAction("auth/logOutRequestedFailed");
 
-export function authReceivedAction() {
-    return authReceived;
-}
+export const loadAuthUserFromLocalStorage = (user) => (dispatch) => {
+    dispatch(authReceived(user));
+};
 
 export const signOut = () => (dispatch) => {
     try {
-        dispatch(logOutRequest());
+        dispatch(logOutRequested());
         localStorageService.removeAuthUser();
         localStorageService.removeCart();
     } catch (error) {
-        dispatch(logOutRequestFailed("Error with logOut"));
+        dispatch(logOutRequestedFailed("Error with logOut"));
     }
 };
 
 export const signIn = (email, pass) => async (dispatch) => {
-    dispatch(authRequest());
+    dispatch(authRequested());
     try {
         const authUser = await authService.signIn(email, pass);
+
         if (authUser) {
             dispatch(authReceived(authUser));
         } else {
-            dispatch(authRequestFailed("User not found"));
+            dispatch(authRequestedFailed("User not found"));
         }
 
         localStorageService.setAuthUser(authUser);
     } catch (error) {
-        dispatch(authRequestFailed(error.message));
+        dispatch(authRequestedFailed(error.message));
     }
 };
 
 // export const signUp =
 //     ({ email, password, ...rest }) =>
 //     async (dispatch) => {
-//         dispatch(authRequest());
+//         dispatch(authRequested());
 //         try {
 //             const data = await authService.register({ email, password });
 //             localStorageService.setTokens(data);
-//             dispatch(authRequestSuccess({ userId: data.localId }));
+//             dispatch(authRequestedSuccess({ userId: data.localId }));
 //             dispatch(
 //                 createUser({
 //                     _id: data.localId,
@@ -97,10 +116,11 @@ export const signIn = (email, pass) => async (dispatch) => {
 //                 })
 //             );
 //         } catch (error) {
-//             dispatch(authRequestFailed(error.message));
+//             dispatch(authRequestedFailed(error.message));
 //         }
 //     };
 
 export const getIsAuth = () => (state) => state.auth.isAuth;
+export const getisAuthAdmin = () => (state) => state.auth.isAuthAdmin;
 
 export default authReducer;
