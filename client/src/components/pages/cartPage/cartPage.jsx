@@ -2,8 +2,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     addProductInCart,
+    deleteProductFromCart,
     getCart,
-    removeProductFromCart
+    removePositionFromCart
 } from "../../../store/cart";
 
 const CartPage = () => {
@@ -16,21 +17,32 @@ const CartPage = () => {
         const turnItem = turnCart.find((el) => el._id === item._id);
 
         if (turnItem) {
-            if ("count" in turnItem) {
-                turnItem.count += 1;
-            } else {
-                turnItem.count = 1;
-            }
+            turnItem.count += 1;
+            turnItem.totalPrice += Number(item.price);
         } else {
-            turnCart.push({ ...item, count: 1 });
+            turnCart.push({
+                ...item,
+                count: 1,
+                price: Number(item.price),
+                totalPrice: Number(item.price)
+            });
         }
+    }
+
+    const total = { Count: 0, Price: 0 };
+    for (const item of turnCart) {
+        total.Count += item.count;
+        total.Price += item.totalPrice;
     }
 
     const handleAddToCart = (product) => {
         dispatch(addProductInCart(product));
     };
-    const handleRemoveFromCart = (product) => {
-        dispatch(removeProductFromCart(product));
+    const handleDeleteFromCart = (product) => {
+        dispatch(deleteProductFromCart(product));
+    };
+    const handleTotalRemoveFromCart = (id) => {
+        dispatch(removePositionFromCart(id));
     };
 
     return (
@@ -40,7 +52,18 @@ const CartPage = () => {
                     {turnCart.map((item, idx) => {
                         return (
                             <div className="d-flex mb-3" key={Date.now() + idx}>
-                                <div className="me-auto">{item.name}</div>
+                                <div>
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-primary btn-sm"
+                                        onClick={() =>
+                                            handleTotalRemoveFromCart(item._id)
+                                        }
+                                    >
+                                        <i className="bi bi-x"></i>
+                                    </button>
+                                </div>
+                                <div className="me-auto ms-2">{`${item.title} - ${item.price}`}</div>
                                 <div
                                     className="btn-group"
                                     role="group"
@@ -50,7 +73,7 @@ const CartPage = () => {
                                         type="button"
                                         className="btn btn-outline-primary btn-sm"
                                         onClick={() =>
-                                            handleRemoveFromCart(item)
+                                            handleDeleteFromCart(item)
                                         }
                                     >
                                         -
@@ -78,6 +101,10 @@ const CartPage = () => {
                             </div>
                         );
                     })}
+                    <hr />
+                    <div>
+                        {`Итого: колличество (${total.Count}) стоимость (${total.Price})`}
+                    </div>
                 </div>
             </div>
         </div>

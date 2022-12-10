@@ -34,7 +34,7 @@ const ProductsListPage = ({ categoryId }) => {
                         to={`/product/${item._id}`}
                         state={{ product: item }}
                     >
-                        {item.name}
+                        {item.title}
                     </Link>
                 </div>
             ))}

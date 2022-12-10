@@ -26,20 +26,20 @@ const authSlice = createSlice({
             state.isLoading = false;
             state.error = action.payload;
         },
-        authAdminRequested: (state, action) => {
-            state.isLoading = true;
-        },
-        authAdminReceived: (state, action) => {
-            state.isAuth = true;
-            state.isAuthAdmin = true;
-            state.entities = action.payload;
-            state.isLoading = false;
-            state.error = null;
-        },
-        authAdminRequestedFailed: (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
+        // authAdminRequested: (state, action) => {
+        //     state.isLoading = true;
+        // },
+        // authAdminReceived: (state, action) => {
+        //     state.isAuth = true;
+        //     state.isAuthAdmin = true;
+        //     state.entities = action.payload;
+        //     state.isLoading = false;
+        //     state.error = null;
+        // },
+        // authAdminRequestedFailed: (state, action) => {
+        //     state.isLoading = false;
+        //     state.error = action.payload;
+        // },
         logOutRequested: (state, action) => {
             state.entities = null;
             state.isAuth = false;

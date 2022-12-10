@@ -23,7 +23,7 @@ const CategoriesListPage = () => {
                                 className="nav-link mt-2 px-2"
                                 to={`/categories/${item._id}`}
                             >
-                                {item.name}
+                                {item.title}
                             </Link>
                         </div>
                     ))}

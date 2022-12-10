@@ -2,36 +2,43 @@
   "Categories": [
     {
       "_id": "85CA196CD0FD49E287AC5BB546AC680D",
-      "name": "Пряники"      
+      "title": "Пряники"      
     },
     {
       "_id": "F47202B5142B4D99B831B65A92E695F6",
-      "name": "Наборы пряников"      
+      "title": "Наборы пряников"      
     }
   ],
   "Products":[
     {
       "_id": "B54B9A07B3ED43039EDCA9104EC49751",
       "categoriesId": "85CA196CD0FD49E287AC5BB546AC680D",
-      "name": "Мишка",
-      "image": "https://club-tort.ru/catalog/dekor/sakharnyy_dekor_pechene/pryanik_mishka_2_10sm/"
+      "title": "Балерина",
+      "description": "Описание товара....",
+      "image": "IMG_20220811_174646.jpeg",
+      "price": 100
     },
     {
       "_id": "8DE7FC3369B846ED9738285E04C94F1C",
       "categoriesId": "85CA196CD0FD49E287AC5BB546AC680D",
-      "name": "Сердце"      
+      "title": "Сердце",
+      "description": "Описание товара....",
+      "image": "IMG_20220811_174646.jpeg",
+      "price": 200
     },
     {
       "_id": "90750E600A0D48988992F32EA0C91136",
       "categoriesId": "F47202B5142B4D99B831B65A92E695F6",
-      "name": "Набор Love is...",
-      "image": "https://drive.google.com/file/d/1d0Jd5oQ0NTsYnaGi_bV29i1BT0nZooMo/view"      
+      "title": "Набор Love is...",
+      "description": "Описание товара....",
+      "image": "IMG_20220727_123553.jpg",
+      "price": 700     
     }
   ],
   "users": [
     {
       "_id": "6E1F70621A0B4A7FB1BE8AFA86B59A39",
-      "name": "Ольга",
+      "title": "Ольга",
       "email": "olga@mail.ru",
       "password": "Test1234",
       "adminStatus": true,
@@ -40,22 +47,11 @@
     },
     {
       "_id": "A1C53263D5DE415F98C73DA3D4C7D191",
-      "name": "Александр",
+      "title": "Александр",
       "email": "shadow091@mail.ru",
       "password": "Test12345",
       "adminStatus": false,
       "phoneNumber": "11111111111",
-      "avatar": "https://drive.google.com/file/d/1LzfXVYQGoIBcftTWnyvxyf75ojkwN9pM/view?usp=share_link"
-
-    }
-  ],
-  "admin": [
-    {
-      "_id": "A1C53263D5DE415F98C73DA3D4C7D191",
-      "name": "Александр",
-      "email": "shadow091@mail.ru",
-      "password": "Test12345",
-      "adminStatus": true,
       "avatar": "https://drive.google.com/file/d/1LzfXVYQGoIBcftTWnyvxyf75ojkwN9pM/view?usp=share_link"
 
     }

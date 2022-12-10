@@ -22,15 +22,41 @@ const catigoriesSlice = createSlice({
             state.entities = [];
             state.error = action.payload;
             state.isLoading = false;
+        },
+        requestCreatedCatigories: (state, action) => {
+            state.isLoading = true;
+        },
+        requestCreatedCatigoriesFailed: (state, action) => {
+            state.error = action.payload;
+            state.isLoading = false;
+        },
+        receivedCreatedCatigories: (state, action) => {
+            state.entities.push({ _id: Date.now(), title: action.payload });
+            state.isLoading = false;
         }
     }
 });
 
 const { reducer: reducerCategories, actions } = catigoriesSlice;
-const { receivedCatigories, requestCatigories, requestCatigoriesFailed } =
-    actions;
+const {
+    receivedCatigories,
+    requestCatigories,
+    requestCatigoriesFailed,
+    requestCreatedCatigories,
+    requestCreatedCatigoriesFailed,
+    receivedCreatedCatigories
+} = actions;
 
 export const getCategories = () => (state) => state.categories.entities;
+
+export const createCategory = (category) => (dispatch) => {
+    dispatch(requestCreatedCatigories());
+    try {
+        dispatch(receivedCreatedCatigories(category));
+    } catch (error) {
+        dispatch(requestCreatedCatigoriesFailed(error.message));
+    }
+};
 
 export const fetchCategories = () => async (dispatch) => {
     dispatch(requestCatigories());

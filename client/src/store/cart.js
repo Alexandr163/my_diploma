@@ -16,7 +16,7 @@ const cartSlice = createSlice({
         productsAdded: (state, action) => {
             state.entities.push(action.payload);
         },
-        productsRemoved: (state, action) => {
+        productsDeleted: (state, action) => {
             const itemIndex = state.entities.findIndex(
                 (item) => item._id === action.payload
             );
@@ -24,12 +24,17 @@ const cartSlice = createSlice({
             if (itemIndex !== -1) {
                 state.entities.splice(itemIndex, 1);
             }
+        },
+        positionRemoved: (state, action) => {
+            const id = action.payload;
+
+            state.entities = state.entities.filter((item) => item._id !== id);
         }
     }
 });
 
 const { reducer: cartReducer, actions } = cartSlice;
-const { productsAdded, productsRemoved, cartLoader } = actions;
+const { productsAdded, productsDeleted, cartLoader, positionRemoved } = actions;
 
 export const addProductInCart = (product) => (dispatch, getState) => {
     dispatch(productsAdded(product));
@@ -38,8 +43,15 @@ export const addProductInCart = (product) => (dispatch, getState) => {
     localStorageService.setCart(cart);
 };
 
-export const removeProductFromCart = (product) => (dispatch, getState) => {
-    dispatch(productsRemoved(product._id));
+export const deleteProductFromCart = (product) => (dispatch, getState) => {
+    dispatch(productsDeleted(product._id));
+
+    const cart = JSON.stringify(getState().cart.entities);
+    localStorageService.setCart(cart);
+};
+
+export const removePositionFromCart = (id) => (dispatch, getState) => {
+    dispatch(positionRemoved(id));
 
     const cart = JSON.stringify(getState().cart.entities);
     localStorageService.setCart(cart);
