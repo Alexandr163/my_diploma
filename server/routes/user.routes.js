@@ -7,7 +7,6 @@ router.patch("/:userid", auth, async (req, res) => {
   try {
     const { userId } = req.params;
 
-    // todo: userId === current user id
     if (userId === req.user._id) {
       const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
         new: true,

@@ -1,41 +1,63 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, getPoducts } from "../../../store/product";
+import { getProductsListByCategoriesId } from "../../../store/product";
+import ButtonGoBack from "../../forms/buttonGoBack";
+import { useSelector } from "react-redux";
 
 const ProductsListPage = ({ categoryId }) => {
-    const product = useSelector(getPoducts());
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(fetchProducts());
-    }, []);
+    const productsList = useSelector(getProductsListByCategoriesId(categoryId));
+    const [toggle, setToggle] = useState(true);
 
-    const getProductsListByCategoriesId = (categoryId) => {
-        let findeProduct = [];
-
-        if (product) {
-            findeProduct = product.filter(
-                (item) => String(item.categoriesId) === String(categoryId)
-            );
+    function compare(a, b) {
+        if (Number(a.price) > Number(b.price)) {
+            return -1;
+        }
+        if (Number(a.price) < Number(b.price)) {
+            return 1;
         }
 
-        return findeProduct;
-    };
+        return 0;
+    }
 
-    const productsList = getProductsListByCategoriesId(categoryId);
+    function sortProductsList() {
+        productsList.sort(compare);
+    }
+
+    if (toggle) {
+        sortProductsList();
+    }
+
+    const handleSort = () => {
+        setToggle((prev) => !prev);
+        sortProductsList();
+    };
 
     return (
         <>
+            <div className="d-flex justify-content-between">
+                <ButtonGoBack />
+                <button
+                    className={`bi bi-sort-down${
+                        toggle ? "" : "-alt"
+                    } btn btn-outline-primary mb-3 btn-sm`}
+                    onClick={handleSort}
+                ></button>
+            </div>
             {productsList.map((item) => (
                 <div key={item._id}>
-                    <Link
-                        className="nav-link mt-2 px-2"
-                        to={`/product/${item._id}`}
-                        state={{ product: item }}
-                    >
-                        {item.title}
-                    </Link>
+                    <div className="d-flex justify-content-between">
+                        <Link
+                            className="nav-link px-2"
+                            to={`/product/${item._id}`}
+                        >
+                            {item.title}
+                        </Link>
+                        <div className="d-flex align-items-center">
+                            {item.price}
+                        </div>
+                    </div>
+                    <hr className="m-0" />
                 </div>
             ))}
         </>

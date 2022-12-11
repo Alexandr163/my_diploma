@@ -64,6 +64,14 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+                <Route
+                    path="/admin/:productId"
+                    element={
+                        <ProtectedRoute>
+                            <AdminPage />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route path="/" element={<Main />} />
                 <Route element={<Navigate to="/" />} />
             </Routes>

@@ -1,10 +1,8 @@
 const Category = require("../models/Category");
 const Product = require("../models/Product");
-const Admin = require("../models/Admin");
 const User = require("../models/User");
 const categoriesMock = require("../mock/categories.json");
 const productsMock = require("../mock/products.json");
-const adminsMock = require("../mock/admins.json");
 const usersMock = require("../mock/users.json");
 
 module.exports = async () => {
@@ -15,10 +13,6 @@ module.exports = async () => {
   const products = await Product.find();
   if (products.length !== productsMock.length) {
     await createInitialEntity(Product, productsMock);
-  }
-  const admins = await Admin.find();
-  if (admins.length !== adminsMock.length) {
-    await createInitialEntity(Admin, adminsMock);
   }
   const uasers = await User.find();
   if (uasers.length !== usersMock.length) {
