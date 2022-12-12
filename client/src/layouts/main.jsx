@@ -1,46 +1,42 @@
 import React from "react";
-// import { useSelector } from "react-redux";
-// import { getPoducts } from "../store/product";
+import SearchForm from "../components/forms/searchForm";
+import { useSelector } from "react-redux";
+import { getPoducts } from "../store/product";
+import { Link } from "react-router-dom";
+import useSearch from "../components/hooks/useSearch";
 
 const Main = () => {
-    // const products = useSelector(getPoducts());
-    // const [searchQuery, setSearchQuery] = useState("");
-
-    // const handleSearchQuery = ({ target }) => {
-    //     setSearchQuery(target.value);
-    // };
-
-    // function filterProducts(data) {
-    //     if (!data) {
-    //         return null;
-    //     }
-    //     return data.filter(
-    //         (product) =>
-    //             product.title.toLowerCase().indexOf(searchQuery()) !== -1
-    //     );
-    // }
+    const products = useSelector(getPoducts());
+    const { handleSearch, newProducts } = useSearch(products);
 
     return (
         <>
             <h1 className="text-center">Main Page</h1>
-            <div className="input-group mb-3 w-50 mx-auto">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Найти..."
-                    aria-label="Recipient's username"
-                    aria-describedby="button-addon2"
-                    // onChange={handleSearchQuery}
-                    // value={searchQuery}
-                />
-                <button
-                    className="btn btn-outline-secondary"
-                    type="button"
-                    id="button-addon2"
-                >
-                    <i className="bi bi-search"></i>
-                </button>
-            </div>
+            <SearchForm onSearch={handleSearch} />
+            {newProducts.length > 0 ? (
+                <div className="container mt-5">
+                    <div className="row">
+                        <div className="col-md-6 offset-md-3 shadow p-4">
+                            {newProducts.map((item) => (
+                                <div key={item._id}>
+                                    <div className="d-flex justify-content-between">
+                                        <Link
+                                            className="nav-link mt-2 px-2"
+                                            to={`/product/${item._id}`}
+                                        >
+                                            {item.title}
+                                        </Link>
+                                        <div className="d-flex align-items-center">
+                                            {item.price}
+                                        </div>
+                                    </div>
+                                    <hr className="m-0" />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            ) : null}
         </>
     );
 };
