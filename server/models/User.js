@@ -22,11 +22,11 @@ const schema = new Schema(
     sex: {
       type: String,
       enum: ["male", "female", "other"],
-      requied: true
+      requied: true,
     },
-    admiinStatus: {
-      type: Boolean
-    }
+    adminStatus: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,
