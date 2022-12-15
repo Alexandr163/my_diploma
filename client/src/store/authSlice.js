@@ -8,62 +8,61 @@ const authSlice = createSlice({
         entities: null,
         error: null,
         isAuth: false,
-        isAuthAdmin: false,
         isLoading: false
     },
     reducers: {
-        authRequested: (state, action) => {
+        signInRequested: (state, action) => {
             state.isLoading = true;
         },
-        authReceived: (state, action) => {
+        signInReceived: (state, action) => {
             state.isAuth = true;
             state.isAuthAdmin = action.payload.adminStatus;
             state.entities = action.payload;
             state.isLoading = false;
             state.error = null;
         },
-        authRequestedFailed: (state, action) => {
+        signInRequestedFailed: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         },
-        // authAdminRequested: (state, action) => {
-        //     state.isLoading = true;
-        // },
-        // authAdminReceived: (state, action) => {
-        //     state.isAuth = true;
-        //     state.isAuthAdmin = true;
-        //     state.entities = action.payload;
-        //     state.isLoading = false;
-        //     state.error = null;
-        // },
-        // authAdminRequestedFailed: (state, action) => {
-        //     state.isLoading = false;
-        //     state.error = action.payload;
-        // },
+        signUpRequested: (state, action) => {
+            state.isLoading = true;
+        },
+        signUpReceived: (state, action) => {
+            state.isAuth = true;
+            state.entities = action.payload;
+            state.isLoading = false;
+            state.error = null;
+        },
+        signUpRequestedFailed: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
         logOutRequested: (state, action) => {
             state.entities = null;
             state.isAuth = false;
             state.isAuthAdmin = false;
             state.error = null;
             state.isLoading = false;
-        },
-        userCreated: (state, action) => {
-            if (!Array.isArray(state.entities)) {
-                state.entities = [];
-            }
-            state.entities.push(action.payload);
         }
     }
 });
 
 const { reducer: authReducer, actions } = authSlice;
-const { authRequested, authRequestedFailed, authReceived, logOutRequested } =
-    actions;
+const {
+    signInRequested,
+    signInRequestedFailed,
+    signInReceived,
+    logOutRequested,
+    signUpRequested,
+    signUpReceived,
+    signUpRequestedFailed
+} = actions;
 
 const logOutRequestedFailed = createAction("auth/logOutRequestedFailed");
 
 export const loadAuthUserFromLocalStorage = (user) => (dispatch) => {
-    dispatch(authReceived(user));
+    dispatch(signInReceived(user));
 };
 
 export const signOut = () => (dispatch) => {
@@ -77,48 +76,32 @@ export const signOut = () => (dispatch) => {
 };
 
 export const signIn = (email, pass) => async (dispatch) => {
-    dispatch(authRequested());
+    dispatch(signInRequested());
     try {
         const authUser = await authService.signIn(email, pass);
 
         if (authUser) {
-            dispatch(authReceived(authUser));
+            dispatch(signInReceived(authUser));
         } else {
-            dispatch(authRequestedFailed("User not found"));
+            dispatch(signInRequestedFailed("User not found"));
         }
 
         localStorageService.setAuthUser(authUser);
     } catch (error) {
-        dispatch(authRequestedFailed(error.message));
+        dispatch(signInRequestedFailed(error.message));
     }
 };
 
-// export const signUp =
-//     ({ email, password, ...rest }) =>
-//     async (dispatch) => {
-//         dispatch(authRequested());
-//         try {
-//             const data = await authService.register({ email, password });
-//             localStorageService.setTokens(data);
-//             dispatch(authRequestedSuccess({ userId: data.localId }));
-//             dispatch(
-//                 createUser({
-//                     _id: data.localId,
-//                     email,
-//                     rate: getRandomInt(1, 5),
-//                     completedMeetings: getRandomInt(0, 200),
-//                     image: `https://avatars.dicebear.com/api/avataaars/${(
-//                         Math.random() + 1
-//                     )
-//                         .toString(36)
-//                         .substring(7)}.svg`,
-//                     ...rest
-//                 })
-//             );
-//         } catch (error) {
-//             dispatch(authRequestedFailed(error.message));
-//         }
-//     };
+export const signUp = (newUser) => async (dispatch) => {
+    dispatch(signUpRequested());
+    try {
+        const { tokens, user } = await authService.signUp(newUser);
+        localStorageService.setAuthUser(tokens);
+        dispatch(signUpReceived(user));
+    } catch (error) {
+        dispatch(signUpRequestedFailed(error.message));
+    }
+};
 
 export const getIsAuth = () => (state) => state.auth.isAuth;
 export const getisAuthAdmin = () => (state) => state.auth.isAuthAdmin;

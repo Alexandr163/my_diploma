@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { validator } from "../../utils/validator";
 import TextField from "../forms/textField";
 import RadioField from "../forms/radioField";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { signUp } from "../../store/authSlice";
 
 const RegisterForm = () => {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -71,13 +72,12 @@ const RegisterForm = () => {
     };
 
     const handleSubmit = (e) => {
-        //     e.preventDefault();
-        //     const isValid = validate();
-        //     if (!isValid) return;
-        //     const newData = {
-        //         ...data
-        //     };
-        //     dispatch(signUp(newData));
+        e.preventDefault();
+        const isValid = validate();
+        if (!isValid) return;
+
+        console.log("--handleSubmit");
+        dispatch(signUp(data));
     };
 
     return (
@@ -128,8 +128,15 @@ const RegisterForm = () => {
                             onChange={handleChange}
                             label="Выберите ваш пол"
                         />
+                        <button>Зарегистрироваться</button>
                         <div>
-                            <Link className="nav-link " aria-current="page" to="/login">Войти</Link>
+                            <Link
+                                className="nav-link "
+                                aria-current="page"
+                                to="/login"
+                            >
+                                Войти
+                            </Link>
                         </div>
                     </form>
                 </div>
