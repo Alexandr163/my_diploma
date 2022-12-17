@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const schema = new Schema(
   {
-    categoriesId: { type: Schema.Types.ObjectId, ref: "Category" },
+    categoryId: { type: Schema.Types.ObjectId, ref: "Category" },
     title: {
       type: String,
       requied: true,

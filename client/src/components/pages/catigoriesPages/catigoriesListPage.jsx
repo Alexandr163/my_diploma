@@ -5,14 +5,14 @@ import { getCategories } from "../../../store/categories";
 import ProductsListPage from "../productsPages/productsListPage";
 
 const CategoriesListPage = () => {
-    const { categoriesId } = useParams();
+    const { categoryId } = useParams();
     const categories = useSelector(getCategories());
-    console.log(categories);
+    console.log(categoryId, categories);
 
     let renderData = null;
 
-    if (categoriesId) {
-        renderData = <ProductsListPage categoryId={categoriesId} />;
+    if (categoryId) {
+        renderData = <ProductsListPage categoryId={categoryId} />;
     } else {
         if (categories) {
             renderData = (

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { getProductsListByCategoriesId } from "../../../store/product";
+import { getProductsListByCategoryId } from "../../../store/product";
 import ButtonGoBack from "../../forms/buttonGoBack";
 import { useSelector } from "react-redux";
 
 const ProductsListPage = ({ categoryId }) => {
-    const productsList = useSelector(getProductsListByCategoriesId(categoryId));
+    const productsList = useSelector(getProductsListByCategoryId(categoryId));
     const [toggle, setToggle] = useState(true);
 
     function compare(a, b) {

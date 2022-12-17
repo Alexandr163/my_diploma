@@ -14,7 +14,7 @@ const ButtonGoBack = ({ count = -1 }) => {
             className="btn btn-outline-primary mb-3 btn-sm"
             onClick={handleBack}
         >
-            Назад
+            <i className="bi bi-backspace" />
         </button>
     );
 };

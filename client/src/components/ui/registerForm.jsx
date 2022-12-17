@@ -13,7 +13,8 @@ const RegisterForm = () => {
         password: "",
         phoneNumber: "",
         sex: "male",
-        name: ""
+        name: "",
+        adminStatus: false
     });
     const [errors, setErrors] = useState({});
 

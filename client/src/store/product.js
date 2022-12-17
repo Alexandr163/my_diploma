@@ -24,7 +24,7 @@ const productsSlice = createSlice({
             state.isLoading = false;
         },
         receivedCreatedProducts: (state, action) => {
-            state.entities.push({ ...action.payload, _id: Date.now() });
+            state.entities.push(action.payload);
             state.isLoading = false;
         },
 
@@ -36,18 +36,14 @@ const productsSlice = createSlice({
             state.isLoading = false;
         },
         receivedUpdateProducts: (state, action) => {
-            console.log("---action", action.payload);
-
             const indexUpdate = state.entities.findIndex((item) => {
-                console.log(item._id, action.payload._id);
-                console.log(typeof item._id, typeof action.payload._id);
                 return item._id === action.payload._id;
             });
 
-            console.log("---indexUpdate", indexUpdate);
-
             if (indexUpdate !== -1) {
                 state.entities[indexUpdate] = action.payload;
+            } else {
+                state.error = `Продукт с id ${action.payload._id} не найден в редакс. Обновление не произведено.`;
             }
 
             state.isLoading = false;
@@ -57,6 +53,18 @@ const productsSlice = createSlice({
             state.isLoading = true;
         },
         requestUpdateProductsFailed: (state, action) => {
+            state.error = action.payload;
+            state.isLoading = false;
+        },
+        receivedRemoveProducts: (state, action) => {
+            state.entities = state.entities.filter((item) => item._id !== action.payload);
+            state.isLoading = false;
+        },
+
+        requestRemoveProducts: (state, action) => {
+            state.isLoading = true;
+        },
+        requestRemoveProductsFailed: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
         }
@@ -73,12 +81,15 @@ const {
     requestCreatedProductsFailed,
     receivedUpdateProducts,
     requestUpdateProducts,
-    requestUpdateProductsFailed
+    requestUpdateProductsFailed,
+    receivedRemoveProducts,
+    requestRemoveProducts,
+    requestRemoveProductsFailed
 } = actions;
 
 export const getPoducts = () => (state) => state.products.entities;
 
-export const getProductsListByCategoriesId = (categoryId) => (state) =>
+export const getProductsListByCategoryId = (categoryId) => (state) =>
     state.products.entities.filter(
         (item) => String(item.categoriesId) === String(categoryId)
     );
@@ -89,7 +100,8 @@ export const getPoductById = (id) => (state) =>
 export const createdProduct = (item) => async (dispatch) => {
     dispatch(requestCreatedProducts());
     try {
-        dispatch(receivedCreatedProducts(item));
+        const newProduct = await productsService.create(item);
+        dispatch(receivedCreatedProducts(newProduct));
     } catch (error) {
         dispatch(requestCreatedProductsFailed(error.message));
     }
@@ -98,9 +110,20 @@ export const createdProduct = (item) => async (dispatch) => {
 export const updateProduct = (item) => async (dispatch) => {
     dispatch(requestUpdateProducts());
     try {
-        dispatch(receivedUpdateProducts(item));
+        const updateProduct = await productsService.update(item);
+        dispatch(receivedUpdateProducts(updateProduct));
     } catch (error) {
         dispatch(requestUpdateProductsFailed(error.message));
+    }
+};
+
+export const removeProduct = (item) => async (dispatch) => {
+    dispatch(requestRemoveProducts());
+    try {
+        const removeProduct = await productsService.delete(item);
+        dispatch(receivedRemoveProducts(removeProduct));
+    } catch (error) {
+        dispatch(requestRemoveProductsFailed(error.message));
     }
 };
 

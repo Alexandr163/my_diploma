@@ -9,7 +9,6 @@ import ButtonGoBack from "../../forms/buttonGoBack";
 const ProductPage = () => {
     const { productId } = useParams();
     const product = useSelector(getPoductById(productId));
-    console.log("---product", product);
     const dispatch = useDispatch();
     const cart = useSelector(getCart());
     const isProductInCart = cart.some((p) => p._id === product._id);
@@ -29,11 +28,13 @@ const ProductPage = () => {
             <div className="container mt-5">
                 <div className="row">
                     <div className="col-md-6 offset-md-3 shadow p-4">
+                        <div className="btn-group" >
                         <ButtonGoBack />
                         <button
                             className="btn btn-outline-primary mb-3 btn-sm bi bi-pencil-square"
                             onClick={handleEdit}
                         ></button>
+                        </div>
                         <div className="">
                             <img
                                 src={`/img/${product.image}`}

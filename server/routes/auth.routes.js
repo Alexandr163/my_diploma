@@ -43,7 +43,9 @@ router.post("/signUp", [
       const tokens = tokenService.generate({ _id: newUser._id });
       await tokenService.save(newUser._id, tokens.refreshToken);
 
-      res.status(201).send({tokens:{ ...tokens, userId: newUser._id }, user:newUser});
+      res
+        .status(201)
+        .send({ tokens: { ...tokens, userId: newUser._id }, user: newUser });
     } catch (error) {
       res.status(500).json({
         message: "на сервере произошла ошибка. Попробуйте позже",
@@ -56,9 +58,9 @@ router.post("/signInWithPassword", [
   check("email", "Email введен не верно").normalizeEmail().isEmail(),
   check("password", "Пароль не может быть пустым").exists(),
   async (req, res) => {
-    
     try {
       const errors = validationResult(req);
+
       if (!errors.isEmpty()) {
         return res.ststus(400).json({
           error: {
@@ -98,7 +100,12 @@ router.post("/signInWithPassword", [
       const tokens = tokenService.generate({ _id: existingUser._id });
       await tokenService.save(existingUser._id, tokens.refreshToken);
 
-      res.status(200).send({ ...tokens, userId: existingUser._id });
+      res
+        .status(200)
+        .send({
+          tokens: { ...tokens, userId: existingUser._id },
+          user: existingUser,
+        });
     } catch (error) {
       res.status(500).json({
         message: "на сервере произошла ошибка. Попробуйте позже",

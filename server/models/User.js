@@ -18,7 +18,6 @@ const schema = new Schema(
       type: Number,
       requied: true,
     },
-    avatar: String,
     sex: {
       type: String,
       enum: ["male", "female", "other"],

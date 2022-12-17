@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { createCategory, getCategories } from "../../../store/categories";
+import {
+    createCategory,
+    getCategories,
+    getCategoryById,
+    removeCategory,
+    updateCategory
+} from "../../../store/categories";
 import {
     createdProduct,
     getPoductById,
     getPoducts,
+    removeProduct,
     updateProduct
 } from "../../../store/product";
 import ButtonGoBack from "../../forms/buttonGoBack";
@@ -22,6 +29,7 @@ const AdminPage = () => {
 
     const { productId } = useParams();
     const product = useSelector(getPoductById(productId));
+    console.log("____product", product);
 
     if (product) {
         init.productName = product.title;
@@ -35,37 +43,76 @@ const AdminPage = () => {
     const dispatch = useDispatch();
     const [toggle, setToggle] = useState(false);
     const categoriesList = useSelector(getCategories());
+    const category = useSelector(getCategoryById(data.selectCategory));
 
     const handleChange = (el) => {
         setData((prev) => ({ ...prev, [el.name]: el.value }));
     };
     const handleSelect = (e) => {
         const { name, value } = e.target;
-        setData((prev) => ({ ...prev, [name]: value }));
+        const { children } = e.target;
+        let newCategoryName;
+
+        for (const item of children) {
+            if (item.value === value) {
+                newCategoryName = item.text;
+            }
+        }
+
+        setData((prev) => ({
+            ...prev,
+            [name]: value,
+            newCategoryName
+        }));
     };
     const handleAddCategory = () => {
         setToggle((prev) => !prev);
     };
+
     const handleSaveCategory = () => {
-        dispatch(createCategory(data.newCategoryName));
+        if (!data.selectCategory) {
+            dispatch(createCategory(data.newCategoryName));
+            setToggle((prev) => !prev);
+            setData({ ...data, newCategoryName: "" });
+        } else {
+            dispatch(
+                updateCategory({
+                    _id: data.selectCategory,
+                    title: data.newCategoryName
+                })
+            );
+            setToggle((prev) => !prev);
+            setData({ ...data, newCategoryName: "" });
+        }
+    };
+    const handleEditCategory = () => {
         setToggle((prev) => !prev);
-        setData({ ...data, newCategoryName: "" });
+        setData({ ...data, newCategoryName: category?.title || "" });
+        // dispatch(createCategory({title: data.newCategoryName, _id: data.selectCategory}));
+        // setToggle((prev) => !prev);
+        // setData({ ...data, newCategoryName: "" });
+    };
+    const handleDeleteCategory = () => {
+        dispatch(removeCategory(category));
     };
     const handleSaveProduct = () => {
-        const dataProduc = {
-            categoriesId: data.selectCategory,
+        const dataProduct = {
+            categoryId: data.selectCategory,
             title: data.productName,
             description: data.description,
             image: "",
-            price: data.price
+            price: Number(data.price)
         };
         if (productId) {
-            dataProduc._id = productId;
-            dataProduc.image = product.image;
-            dispatch(updateProduct(dataProduc));
+            dataProduct._id = productId;
+            dataProduct.image = product.image;
+            dispatch(updateProduct(dataProduct));
         } else {
-            dispatch(createdProduct(dataProduc));
+            dispatch(createdProduct(dataProduct));
         }
+    };
+    const handleDeleteProduct = () => {
+        dispatch(removeProduct(product));
     };
 
     return (
@@ -102,13 +149,13 @@ const AdminPage = () => {
                                     onChange={handleChange}
                                 />
                                 <TextField
-                                    type="text"
+                                    type="number"
                                     name="price"
                                     label="Стоимость"
                                     value={data.price}
                                     onChange={handleChange}
                                 />
-                                <div className="d-flex">
+                                <div>
                                     <select
                                         className="form-select mb-3 w-60"
                                         aria-label=".form-select-lg example"
@@ -116,8 +163,8 @@ const AdminPage = () => {
                                         value={data.selectCategory}
                                         onChange={handleSelect}
                                     >
-                                        <option value="DEFAULT" disabled>
-                                            Выбирете категорию
+                                        <option value="">
+                                            Новая категория
                                         </option>
                                         {categoriesList.map((item) => {
                                             return (
@@ -130,13 +177,36 @@ const AdminPage = () => {
                                             );
                                         })}
                                     </select>
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-primary mb-3 btn-sm"
-                                        onClick={handleAddCategory}
+                                    <div
+                                        className="btn-group"
+                                        role="group"
+                                        aria-label="Basic mixed styles outlined example"
                                     >
-                                        Добавить
-                                    </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-success mb-3 btn-sm"
+                                            onClick={handleAddCategory}
+                                            disabled={data.selectCategory}
+                                        >
+                                            Добавить
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary mb-3 btn-sm"
+                                            onClick={handleEditCategory}
+                                            disabled={!data.selectCategory}
+                                        >
+                                            Редактировать
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger mb-3 btn-sm"
+                                            onClick={handleDeleteCategory}
+                                            disabled={!data.selectCategory}
+                                        >
+                                            Удалить
+                                        </button>
+                                    </div>
                                 </div>
                                 {toggle ? (
                                     <div className="d-flex justify-content-center mb-3">
@@ -149,7 +219,7 @@ const AdminPage = () => {
                                         />
                                         <button
                                             type="button"
-                                            className="btn btn-outline-primary my-4 btn-sm"
+                                            className="btn btn-outline-success my-4 btn-sm"
                                             onClick={handleSaveCategory}
                                         >
                                             Сохранить
@@ -157,13 +227,26 @@ const AdminPage = () => {
                                     </div>
                                 ) : null}
                                 <div className="d-flex justify-content-center mt-3">
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-primary btn-sm"
-                                        onClick={handleSaveProduct}
+                                    <div
+                                        className="btn-group"
+                                        role="group"
+                                        aria-label="Basic mixed styles outlined example"
                                     >
-                                        Сохранить товар
-                                    </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-success btn-sm"
+                                            onClick={handleSaveProduct}
+                                        >
+                                            Сохранить товар
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger btn-sm"
+                                            onClick={handleDeleteProduct}
+                                        >
+                                            Удалить товар
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

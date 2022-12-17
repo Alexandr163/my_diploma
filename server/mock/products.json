@@ -1,7 +1,7 @@
 [
   {
     "_id": "B54B9A07B3ED43039EDCA9104EC49751",
-    "categoriesId": "63877f594c4795136f4231d4",
+    "categoryId": "63877f594c4795136f4231d4",
     "title": "Балерина",
     "description": "Описание товара....",
     "image": "IMG_20220811_174646.jpg",
@@ -9,7 +9,7 @@
   },
   {
     "_id": "8DE7FC3369B846ED9738285E04C94F1C",
-    "categoriesId": "63877f594c4795136f4231d4",
+    "categoryId": "63877f594c4795136f4231d4",
     "title": "Сердце",
     "description": "Описание товара....",
     "image": "IMG_20221001_133256.jpg",
@@ -17,7 +17,7 @@
   },
   {
     "_id": "90750E600A0D48988992F32EA0C91136",
-    "categoriesId": "63877f594c4795136f4231d5",
+    "categoryId": "63877f594c4795136f4231d5",
     "title": "Набор Love is...",
     "description": "Описание товара....",
     "image": "IMG_20220727_123553.jpg",

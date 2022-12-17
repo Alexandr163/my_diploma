@@ -75,18 +75,13 @@ export const signOut = () => (dispatch) => {
     }
 };
 
-export const signIn = (email, pass) => async (dispatch) => {
+export const signIn = (email, password) => async (dispatch) => {
     dispatch(signInRequested());
     try {
-        const authUser = await authService.signIn(email, pass);
+        const { tokens, user } = await authService.signIn(email, password);
 
-        if (authUser) {
-            dispatch(signInReceived(authUser));
-        } else {
-            dispatch(signInRequestedFailed("User not found"));
-        }
-
-        localStorageService.setAuthUser(authUser);
+        localStorageService.setAuthUser(tokens);
+        dispatch(signInReceived(user));
     } catch (error) {
         dispatch(signInRequestedFailed(error.message));
     }
@@ -96,6 +91,7 @@ export const signUp = (newUser) => async (dispatch) => {
     dispatch(signUpRequested());
     try {
         const { tokens, user } = await authService.signUp(newUser);
+
         localStorageService.setAuthUser(tokens);
         dispatch(signUpReceived(user));
     } catch (error) {
