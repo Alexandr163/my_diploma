@@ -3,7 +3,7 @@ import { validator } from "../../utils/validator";
 import TextField from "../forms/textField";
 import RadioField from "../forms/radioField";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signUp } from "../../store/authSlice";
 
 const RegisterForm = () => {
@@ -17,6 +17,7 @@ const RegisterForm = () => {
         adminStatus: false
     });
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const handleChange = (target) => {
         setData((prevState) => ({
@@ -71,14 +72,15 @@ const RegisterForm = () => {
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
+    const isValid = Object.keys(errors).length === 0;
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
 
-        console.log("--handleSubmit");
         dispatch(signUp(data));
+        navigate("/");
     };
 
     return (
@@ -129,7 +131,13 @@ const RegisterForm = () => {
                             onChange={handleChange}
                             label="Выберите ваш пол"
                         />
-                        <button>Зарегистрироваться</button>
+                        <button
+                            className="btn btn-primary w-100 mx-auto"
+                            type="submit"
+                            disabled={!isValid}
+                        >
+                            Зарегистрироваться
+                        </button>
                         <div>
                             <Link
                                 className="nav-link "

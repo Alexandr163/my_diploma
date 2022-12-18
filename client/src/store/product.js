@@ -57,7 +57,10 @@ const productsSlice = createSlice({
             state.isLoading = false;
         },
         receivedRemoveProducts: (state, action) => {
-            state.entities = state.entities.filter((item) => item._id !== action.payload);
+            console.log("------receivedRemoveProducts", action.payload);
+            state.entities = state.entities.filter(
+                (item) => item._id !== action.payload
+            );
             state.isLoading = false;
         },
 
@@ -91,7 +94,7 @@ export const getPoducts = () => (state) => state.products.entities;
 
 export const getProductsListByCategoryId = (categoryId) => (state) =>
     state.products.entities.filter(
-        (item) => String(item.categoriesId) === String(categoryId)
+        (item) => String(item.categoryId) === String(categoryId)
     );
 
 export const getPoductById = (id) => (state) =>
@@ -120,8 +123,8 @@ export const updateProduct = (item) => async (dispatch) => {
 export const removeProduct = (item) => async (dispatch) => {
     dispatch(requestRemoveProducts());
     try {
-        const removeProduct = await productsService.delete(item);
-        dispatch(receivedRemoveProducts(removeProduct));
+        await productsService.delete(item);
+        dispatch(receivedRemoveProducts(item._id));
     } catch (error) {
         dispatch(requestRemoveProductsFailed(error.message));
     }

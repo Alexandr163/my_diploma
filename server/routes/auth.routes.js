@@ -100,12 +100,10 @@ router.post("/signInWithPassword", [
       const tokens = tokenService.generate({ _id: existingUser._id });
       await tokenService.save(existingUser._id, tokens.refreshToken);
 
-      res
-        .status(200)
-        .send({
-          tokens: { ...tokens, userId: existingUser._id },
-          user: existingUser,
-        });
+      res.status(200).send({
+        tokens: { ...tokens, userId: existingUser._id },
+        user: existingUser,
+      });
     } catch (error) {
       res.status(500).json({
         message: "на сервере произошла ошибка. Попробуйте позже",
@@ -120,7 +118,7 @@ function isTokenInvalid(data, dbToken) {
 
 router.post("/token", async (req, res) => {
   try {
-    const { refresh_token: refreshToken } = req.body;
+    const { refreshToken, userId } = req.body;
     const data = tokenService.validateRefresh(refreshToken);
     const dbToken = await tokenService.findToken(refreshToken);
 
@@ -133,7 +131,17 @@ router.post("/token", async (req, res) => {
     });
     await tokenService.save(data._id, tokens.refreshToken);
 
-    res.status(200).send({ ...tokens, userId: data._id });
+    const user = await User.findOne({ _id: userId });
+    if (!user) {
+      return res.status(400).send({
+        error: {
+          message: `User with id ${userId}, refreshToken ${refreshToken} not found`,
+          code: 400,
+        },
+      });
+    }
+
+    res.status(200).send({ tokens: { ...tokens, userId: data._id }, user });
   } catch (error) {
     res.status(500).json({
       message: "на сервере произошла ошибка. Попробуйте позже",

@@ -12,6 +12,11 @@ const authService = {
 
         return data;
     },
+    async signInTokens(dataTokens) {
+        const { data } = await httpService.post(URL + "/token", dataTokens);
+
+        return data;
+    },
     async signUp(user) {
         try {
             const { data } = await httpService.post(URL + "/signUp", user);

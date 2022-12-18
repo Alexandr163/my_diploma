@@ -19,6 +19,7 @@ import { fetchCategories, getCategories } from "./store/categories";
 import { loadAuthUserFromLocalStorage } from "./store/authSlice";
 import { fetchProducts, getPoducts } from "./store/product";
 import Loader from "./components/loader";
+import ProtectedRouteAdmin from "./components/hoc/protectedRouteAdmin";
 
 function App() {
     const dispatch = useDispatch();
@@ -59,17 +60,17 @@ function App() {
                 <Route
                     path="/admin"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRouteAdmin>
                             <AdminPage />
-                        </ProtectedRoute>
+                        </ProtectedRouteAdmin>
                     }
                 />
                 <Route
                     path="/admin/:productId"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRouteAdmin>
                             <AdminPage />
-                        </ProtectedRoute>
+                        </ProtectedRouteAdmin>
                     }
                 />
                 <Route path="/" element={<Main />} />

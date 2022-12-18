@@ -8,7 +8,8 @@ const authSlice = createSlice({
         entities: null,
         error: null,
         isAuth: false,
-        isLoading: false
+        isLoading: false,
+        isAuthAdmin: false
     },
     reducers: {
         signInRequested: (state, action) => {
@@ -61,9 +62,18 @@ const {
 
 const logOutRequestedFailed = createAction("auth/logOutRequestedFailed");
 
-export const loadAuthUserFromLocalStorage = (user) => (dispatch) => {
-    dispatch(signInReceived(user));
-};
+export const loadAuthUserFromLocalStorage =
+    (dataTokens) => async (dispatch) => {
+        dispatch(signInRequested());
+        try {
+            const { tokens, user } = await authService.signInTokens(dataTokens);
+
+            localStorageService.setAuthUser(tokens);
+            dispatch(signInReceived(user));
+        } catch (error) {
+            dispatch(signInRequestedFailed(error.message));
+        }
+    };
 
 export const signOut = () => (dispatch) => {
     try {

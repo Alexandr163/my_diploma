@@ -1,6 +1,5 @@
 [
   {
-    "_id": "6E1F70621A0B4A7FB1BE8AFA86B59A39",
     "name": "Ольга",
     "email": "olga@mail.ru",
     "password": "Test1234",
@@ -9,7 +8,6 @@
     "adminStatus": true
   },
   {
-    "_id": "A1C53263D5DE415F98C73DA3D4C7D191",
     "name": "Александр",
     "email": "shadow091@mail.ru",
     "password": "Test12345",

@@ -3,7 +3,7 @@ const Category = require("../models/Category");
 const auth = require("../middleware/auth.middleware");
 const router = express.Router({ mergeParams: true });
 
-router.patch("/updateCategory", auth, async (req, res) => {
+router.patch("/updateCategory", async (req, res) => {
   const category = req.body;
 
   try {
@@ -61,7 +61,7 @@ router.delete("/:categoryId", async (req, res) => {
   try {
     const { categoryId } = req.params;
 
-    const removeCategory = await Product.findById(categoryId);
+    const removeCategory = await Category.findById(categoryId);
 
     removeCategory.remove();
 

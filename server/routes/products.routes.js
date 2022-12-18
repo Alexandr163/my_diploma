@@ -3,7 +3,7 @@ const Product = require("../models/Product");
 const auth = require("../middleware/auth.middleware");
 const router = express.Router({ mergeParams: true });
 
-router.patch("/:productId", auth, async (req, res) => {
+router.patch("/:productId", async (req, res) => {
   try {
     const { productId } = req.params;
 
@@ -59,9 +59,10 @@ router.get("/", async (req, res) => {
 
 router.delete("/:productId", async (req, res) => {
   try {
-    const { productId } = req.params;
+    const { productId } = req.params;  
 
     const removeProduct = await Product.findById(productId);
+
 
     removeProduct.remove();
 

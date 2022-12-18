@@ -26,10 +26,7 @@ export default {
         return data;
     },
     async delete(product) {
-        const { data } = await httpService.delete(
-            URL + `/${product._id}`,
-            product
-        );
+        const { data } = await httpService.delete(URL + `/${product._id}`);
 
         return data;
     }

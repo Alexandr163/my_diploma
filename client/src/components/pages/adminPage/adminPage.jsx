@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import {
     createCategory,
     getCategories,
@@ -29,16 +29,22 @@ const AdminPage = () => {
 
     const { productId } = useParams();
     const product = useSelector(getPoductById(productId));
-    console.log("____product", product);
 
-    if (product) {
-        init.productName = product.title;
-        init.selectCategory = product.categoriesId;
-        init.description = product.description;
-        init.price = product.price;
-    }
+    useEffect(() => {
+        if (product) {
+            const newData = {
+                productName: product.title,
+                selectCategory: product.categoryId,
+                description: product.description,
+                price: product.price
+            };
+
+            setData(newData);
+        }
+    }, [productId]);
 
     const [data, setData] = useState(init);
+    const location = useLocation();
     const productsList = useSelector(getPoducts());
     const dispatch = useDispatch();
     const [toggle, setToggle] = useState(false);
@@ -88,9 +94,6 @@ const AdminPage = () => {
     const handleEditCategory = () => {
         setToggle((prev) => !prev);
         setData({ ...data, newCategoryName: category?.title || "" });
-        // dispatch(createCategory({title: data.newCategoryName, _id: data.selectCategory}));
-        // setToggle((prev) => !prev);
-        // setData({ ...data, newCategoryName: "" });
     };
     const handleDeleteCategory = () => {
         dispatch(removeCategory(category));
@@ -115,6 +118,11 @@ const AdminPage = () => {
         dispatch(removeProduct(product));
     };
 
+    const isAdminForm = location.state?.adminForm;
+    const isFullForm = productId && !isAdminForm;
+    console.log(location.state);
+    console.log(isAdminForm);
+
     return (
         <>
             <div className="d-flex justify-content-center">
@@ -122,7 +130,7 @@ const AdminPage = () => {
                     <div className="row">
                         <div
                             className={`col-md-${
-                                productId ? "6" : "10"
+                                isFullForm ? "6" : "10"
                             } offset-md-3 shadow p-4`}
                         >
                             <ButtonGoBack />
@@ -252,7 +260,7 @@ const AdminPage = () => {
                         </div>
                     </div>
                 </div>
-                {productId ? null : (
+                {isFullForm ? null : (
                     <div className="container mt-5">
                         <div className="row">
                             <div className="col-md-8 offset-md-2 shadow p-4">
@@ -270,11 +278,15 @@ const AdminPage = () => {
                                             <div key={item._id}>
                                                 <div className="d-flex justify-content-between">
                                                     <Link
+                                                        className="nav-link mt-2 px-2 bi-pencil-square"
+                                                        to={`/admin/${item._id}`}
+                                                        state={{
+                                                            adminForm: true
+                                                        }}
+                                                    ></Link>
+                                                    <Link
                                                         className="nav-link mt-2 px-2"
                                                         to={`/product/${item._id}`}
-                                                        state={{
-                                                            product: item
-                                                        }}
                                                     >
                                                         {item.title}
                                                     </Link>
