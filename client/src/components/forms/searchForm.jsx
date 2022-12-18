@@ -25,7 +25,7 @@ const SearchForm = ({ onSearch }) => {
                 id="button-addon2"
                 onClick={() => onSearch(value)}
             >
-                <i className="bi bi-search"></i>
+                <i className="bi bi-search" />
             </button>
         </div>
     );

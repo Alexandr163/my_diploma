@@ -52,26 +52,24 @@ const CartPage = () => {
                     {turnCart.map((item, idx) => {
                         return (
                             <div className="d-flex mb-3" key={Date.now() + idx}>
-                                <div>
-                                    <button
+                                <div className="me-auto ms-2">{`${item.title} - ${item.price} руб.`}</div>
+                                <div
+                                    className="btn-group"
+                                    role="group"
+                                    aria-label="Basic outlined example"
+                                >
+                                                                        <button
                                         type="button"
-                                        className="btn btn-outline-primary btn-sm"
+                                        className="btn btn-primary btn-sm"
                                         onClick={() =>
                                             handleTotalRemoveFromCart(item._id)
                                         }
                                     >
                                         <i className="bi bi-x"></i>
                                     </button>
-                                </div>
-                                <div className="me-auto ms-2">{`${item.title} - ${item.price}`}</div>
-                                <div
-                                    className="btn-group"
-                                    role="group"
-                                    aria-label="Basic outlined example"
-                                >
                                     <button
                                         type="button"
-                                        className="btn btn-outline-primary btn-sm"
+                                        className="btn btn-primary btn-sm"
                                         onClick={() =>
                                             handleDeleteFromCart(item)
                                         }
@@ -80,7 +78,7 @@ const CartPage = () => {
                                     </button>
                                     <button
                                         type="button"
-                                        className="btn btn-outline-primary btn-sm"
+                                        className="btn btn-primary btn-sm"
                                         onClick={() => handleAddToCart(item)}
                                     >
                                         +
@@ -102,8 +100,15 @@ const CartPage = () => {
                         );
                     })}
                     <hr />
-                    <div>
-                        {`Итого: колличество (${total.Count}) стоимость (${total.Price})`}
+                    <div className="text-center mb-2">
+                        <div className="badge bg-primary">
+                        {`Товаров в корзине: ${total.Count} шт.`}
+                        </div>
+                    </div>
+                    <div className="text-center mb-2">
+                    <div className="badge bg-primary">
+                        {`Сумма к оплате: ${total.Price} руб.`}
+                        </div>
                     </div>
                 </div>
             </div>

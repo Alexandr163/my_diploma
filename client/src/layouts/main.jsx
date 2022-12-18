@@ -27,7 +27,7 @@ const Main = () => {
                                             {item.title}
                                         </Link>
                                         <div className="d-flex align-items-center">
-                                            {item.price}
+                                            {item.price} руб.
                                         </div>
                                     </div>
                                     <hr className="m-0" />

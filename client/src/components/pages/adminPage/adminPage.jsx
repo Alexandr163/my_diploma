@@ -27,6 +27,8 @@ const AdminPage = () => {
         price: 0
     };
 
+    // const navigate = useNavigate();
+
     const { productId } = useParams();
     const product = useSelector(getPoductById(productId));
 
@@ -120,9 +122,6 @@ const AdminPage = () => {
 
     const isAdminForm = location.state?.adminForm;
     const isFullForm = productId && !isAdminForm;
-    console.log(location.state);
-    console.log(isAdminForm);
-
     return (
         <>
             <div className="d-flex justify-content-center">
@@ -291,7 +290,7 @@ const AdminPage = () => {
                                                         {item.title}
                                                     </Link>
                                                     <div className="d-flex align-items-center">
-                                                        {item.price}
+                                                        {item.price} руб.
                                                     </div>
                                                 </div>
                                                 <hr className="m-0" />
