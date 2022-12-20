@@ -57,6 +57,23 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:productId", async (req, res) => {
+  const {productId} = req.params
+
+  try {
+    
+    const found = await Product.findById(productId);
+
+    res.send(found);
+  } catch (error) {
+        res.status(500).json({
+      message: "на сервере произошла ошибка. Попробуйте позже",
+    });
+  }
+
+});
+
+
 router.delete("/:productId", async (req, res) => {
   try {
     const { productId } = req.params;  

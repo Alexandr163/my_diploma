@@ -29,5 +29,10 @@ export default {
         const { data } = await httpService.delete(URL + `/${product._id}`);
 
         return data;
+    },
+    async getProductById(_id) {
+        const { data } = await httpService.get(URL + `/${_id}`);
+
+        return data;
     }
 };

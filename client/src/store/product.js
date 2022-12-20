@@ -97,8 +97,10 @@ export const getProductsListByCategoryId = (categoryId) => (state) =>
         (item) => String(item.categoryId) === String(categoryId)
     );
 
-export const getPoductById = (id) => (state) =>
-    state.products.entities.find((item) => item._id === id);
+// export const getPoductById = (id) => (state) =>
+//     state.products.entities.find((item) => item._id === id);
+export const getPoductById = (id) => async (state) =>
+    await productsService.getProductById(id);
 
 export const createdProduct = (item) => async (dispatch) => {
     dispatch(requestCreatedProducts());

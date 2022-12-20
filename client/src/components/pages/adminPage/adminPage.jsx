@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
     createCategory,
     getCategories,
@@ -10,13 +10,13 @@ import {
 } from "../../../store/categories";
 import {
     createdProduct,
-    getPoductById,
     getPoducts,
     removeProduct,
     updateProduct
 } from "../../../store/product";
 import ButtonGoBack from "../../forms/buttonGoBack";
 import TextField from "../../forms/textField";
+import productsService from "../../../services/products.service";
 
 const AdminPage = () => {
     const init = {
@@ -27,26 +27,30 @@ const AdminPage = () => {
         price: 0
     };
 
-    // const navigate = useNavigate();
-
     const { productId } = useParams();
-    const product = useSelector(getPoductById(productId));
+    const [product, setProduct] = useState();
 
     useEffect(() => {
-        if (product) {
-            const newData = {
-                productName: product.title,
-                selectCategory: product.categoryId,
-                description: product.description,
-                price: product.price
-            };
+        if (productId) {
+            productsService.getProductById(productId).then((product) => {
+                const newData = {
+                    productName: product.title,
+                    selectCategory: product.categoryId,
+                    description: product.description,
+                    price: product.price
+                };
 
-            setData(newData);
+                setData(newData);
+                setProduct(product);
+            });
         }
     }, [productId]);
 
-    const [data, setData] = useState(init);
     const location = useLocation();
+    const isAdminForm = location.state?.adminForm;
+    const isFullForm = productId && !isAdminForm;
+    const navigate = useNavigate();
+    const [data, setData] = useState(init);
     const productsList = useSelector(getPoducts());
     const dispatch = useDispatch();
     const [toggle, setToggle] = useState(false);
@@ -115,13 +119,18 @@ const AdminPage = () => {
         } else {
             dispatch(createdProduct(dataProduct));
         }
+
+        setData(init);
+        if (!isFullForm) {
+            navigate("/admin");
+        } else {
+            navigate(-1);
+        }
     };
     const handleDeleteProduct = () => {
         dispatch(removeProduct(product));
     };
 
-    const isAdminForm = location.state?.adminForm;
-    const isFullForm = productId && !isAdminForm;
     return (
         <>
             <div className="d-flex justify-content-center">
