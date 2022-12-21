@@ -129,6 +129,8 @@ const AdminPage = () => {
     };
     const handleDeleteProduct = () => {
         dispatch(removeProduct(product));
+        setData(init);
+        navigate("/admin");
     };
 
     return (
