@@ -1,0 +1,10 @@
+{
+    "port": 8080,
+    "mongoUri": "mongodb+srv://Alexandr:NJ87FDre3@diplomacluster.kncg4ag.mongodb.net/app?retryWrites=true&w=majority",
+    "accessSecret": "backend secret key",
+    "refreshSecret": "secret rfresh key"
+}
+
+
+
+ 
