@@ -10,7 +10,6 @@ import {
 const CartPage = () => {
     const cart = useSelector(getCart());
     const dispatch = useDispatch();
-
     const turnCart = [];
 
     for (const item of cart) {
@@ -38,9 +37,11 @@ const CartPage = () => {
     const handleAddToCart = (product) => {
         dispatch(addProductInCart(product));
     };
+
     const handleDeleteFromCart = (product) => {
         dispatch(deleteProductFromCart(product));
     };
+
     const handleTotalRemoveFromCart = (id) => {
         dispatch(removePositionFromCart(id));
     };
@@ -58,7 +59,7 @@ const CartPage = () => {
                                     role="group"
                                     aria-label="Basic outlined example"
                                 >
-                                                                        <button
+                                    <button
                                         type="button"
                                         className="btn btn-primary btn-sm"
                                         onClick={() =>
@@ -102,12 +103,12 @@ const CartPage = () => {
                     <hr />
                     <div className="text-center mb-2">
                         <div className="badge bg-primary">
-                        {`Товаров в корзине: ${total.Count} шт.`}
+                            {`Товаров в корзине: ${total.Count} шт.`}
                         </div>
                     </div>
                     <div className="text-center mb-2">
-                    <div className="badge bg-primary">
-                        {`Сумма к оплате: ${total.Price} руб.`}
+                        <div className="badge bg-primary">
+                            {`Сумма к оплате: ${total.Price} руб.`}
                         </div>
                     </div>
                 </div>

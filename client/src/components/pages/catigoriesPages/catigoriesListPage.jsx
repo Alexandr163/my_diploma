@@ -7,8 +7,6 @@ import ProductsListPage from "../productsPages/productsListPage";
 const CategoriesListPage = () => {
     const { categoryId } = useParams();
     const categories = useSelector(getCategories());
-    console.log(categoryId, categories);
-
     let renderData = null;
 
     if (categoryId) {

@@ -39,7 +39,7 @@ router.post("/createProduct", async (req, res) => {
     const newProduct = await Product.create(product);
     res.status(200).send(newProduct);
   } catch (error) {
-    console.log("---error", error);
+
     res.status(500).json({
       message: `Не удалось создать товар с ${product.title}`,
     });

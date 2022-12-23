@@ -28,6 +28,7 @@ const ProductPage = () => {
         e.stopPropagation();
         dispatch(addProductInCart(product));
     };
+
     const handleEdit = () => {
         navigate(`/admin/${product._id}`);
     };

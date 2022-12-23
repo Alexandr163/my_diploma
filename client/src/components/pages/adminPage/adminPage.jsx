@@ -60,6 +60,7 @@ const AdminPage = () => {
     const handleChange = (el) => {
         setData((prev) => ({ ...prev, [el.name]: el.value }));
     };
+
     const handleSelect = (e) => {
         const { name, value } = e.target;
         const { children } = e.target;
@@ -77,6 +78,7 @@ const AdminPage = () => {
             newCategoryName
         }));
     };
+
     const handleAddCategory = () => {
         setToggle((prev) => !prev);
     };
@@ -97,13 +99,16 @@ const AdminPage = () => {
             setData({ ...data, newCategoryName: "" });
         }
     };
+
     const handleEditCategory = () => {
         setToggle((prev) => !prev);
         setData({ ...data, newCategoryName: category?.title || "" });
     };
+
     const handleDeleteCategory = () => {
         dispatch(removeCategory(category));
     };
+
     const handleSaveProduct = () => {
         const dataProduct = {
             categoryId: data.selectCategory,
@@ -127,6 +132,7 @@ const AdminPage = () => {
             navigate(-1);
         }
     };
+
     const handleDeleteProduct = () => {
         dispatch(removeProduct(product));
         setData(init);
