@@ -107,8 +107,7 @@ const AdminPage = () => {
 
     const handleDeleteCategory = () => {
         dispatch(removeCategory(category));
-        console.log(init.selectCategory);
-        setData(init.selectCategory);
+        setData(null);
     };
 
     const handleSaveProduct = () => {
