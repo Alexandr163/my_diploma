@@ -19,7 +19,9 @@ const ProductPage = () => {
 
     const dispatch = useDispatch();
     const cart = useSelector(getCart());
-    const isProductInCart = cart.some((p) => p._id === product._id);
+    const isProductInCart = product
+        ? cart.some((p) => p._id === product._id)
+        : false;
     const isAuth = useSelector(getIsAuth());
     const isAuthAdmin = useSelector(getisAuthAdmin());
     const navigate = useNavigate();
