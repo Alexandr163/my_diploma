@@ -11,7 +11,7 @@ const Main = () => {
 
     return (
         <>
-            <h1 className="text-center">Main Page</h1>
+            <h1 className="text-center">Пряники Самара</h1>
             <SearchForm onSearch={handleSearch} />
             {newProducts.length > 0 ? (
                 <div className="container mt-5">

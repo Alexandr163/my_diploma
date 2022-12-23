@@ -57,7 +57,6 @@ const productsSlice = createSlice({
             state.isLoading = false;
         },
         receivedRemoveProducts: (state, action) => {
-
             state.entities = state.entities.filter(
                 (item) => item._id !== action.payload
             );
