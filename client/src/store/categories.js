@@ -55,7 +55,9 @@ const catigoriesSlice = createSlice({
             state.isLoading = false;
         },
         receivedRemoveCatigory: (state, action) => {
-            state.entities = state.entities.filter((item) => item._id !== action.payload);
+            state.entities = state.entities.filter(
+                (item) => item._id !== action.payload._id
+            );
             state.isLoading = false;
         },
 
@@ -83,7 +85,6 @@ const {
     receivedRemoveCatigory,
     requestRemoveCatigory,
     requestRemoveCatigoryFailed
-
 } = actions;
 
 export const getCategories = () => (state) => state.categories.entities;
@@ -113,8 +114,8 @@ export const updateCategory = (category) => async (dispatch) => {
 export const removeCategory = (item) => async (dispatch) => {
     dispatch(requestRemoveCatigory());
     try {
-        const removeCategory = await categoriesService.delete(item);
-        dispatch(receivedRemoveCatigory(removeCategory));
+        await categoriesService.delete(item);
+        dispatch(receivedRemoveCatigory(item));
     } catch (error) {
         dispatch(requestRemoveCatigoryFailed(error.message));
     }
