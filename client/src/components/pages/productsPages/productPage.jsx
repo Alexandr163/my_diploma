@@ -62,8 +62,7 @@ const ProductPage = () => {
                                     </h4>
                                     <div className="d-flex justify-content-beetwen text-center w-100">
 
-                                    <span className="text-center w-50">
-
+                                    <span className="text-center">
                                         {product.description}
                                     </span>
                                     </div>
