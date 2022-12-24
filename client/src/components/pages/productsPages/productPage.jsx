@@ -49,20 +49,22 @@ const ProductPage = () => {
                                     ></button>
                                 ) : null}
                             </div>
-                            <div className="d-flex justify-content-between">
+                            <div className="d-flex justify-content-beetwen">
                                 <img
                                     className="rounded float-start"
                                     src={`/img/${product.image}`}
                                     width="200px"
                                     height="200px"
                                 />
-                                <div className="mx-5">
+                                <div className="mx-5 w-50">
                                     <h4 className="text-center">
                                         {product.title}
                                     </h4>
-                                    <span className="">
+                                    <div className="d-flex justify-content-beetwen text-center w-100">
+                                    <span className="text-center w-50">
                                         {product.description}
                                     </span>
+                                    </div>
                                 </div>
                             </div>
                             <h5 className="text-end">{product.price} руб.</h5>
