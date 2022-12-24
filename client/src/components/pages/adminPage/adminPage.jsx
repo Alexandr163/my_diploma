@@ -17,6 +17,7 @@ import {
 import ButtonGoBack from "../../forms/buttonGoBack";
 import TextField from "../../forms/textField";
 import productsService from "../../../services/products.service";
+import TextAreaField from "../../forms/textAreaField";
 
 const AdminPage = () => {
     const init = {
@@ -107,7 +108,10 @@ const AdminPage = () => {
 
     const handleDeleteCategory = () => {
         dispatch(removeCategory(category));
-        setData(init);
+        if (!productId) {
+            setData(init);
+            navigate("/admin");
+        }
     };
 
     const handleSaveProduct = () => {
@@ -166,12 +170,12 @@ const AdminPage = () => {
                                     value={data.productName}
                                     onChange={handleChange}
                                 />
-                                <TextField
+                                <TextAreaField
                                     type="text"
-                                    name="description"
-                                    label="Описание"
                                     value={data.description}
                                     onChange={handleChange}
+                                    name="description"
+                                    label="Описание"
                                 />
                                 <TextField
                                     type="number"
